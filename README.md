@@ -9,68 +9,66 @@ To write a python program for creating File Transfer using TCP Sockets Links
 5. In the client side receive the file from server and then write the content into it.
 ## PROGRAM
 
-Client :
-```
-import socket
-
+CLIENT  :
+```import socket
 s = socket.socket()
+host = socket.gethostname()
 port = 60000
 s.connect(('localhost', port))
 s.send("Hello server!".encode())
-
 with open('received_file', 'wb') as f:
-    while True:
-        print('receiving data...')
-        data = s.recv(1024)
-        print('data=%s' % (data))
-        if not data:
-            break
-        f.write(data)
-
+   while True:
+      print('receiving data...')
+      data = s.recv(1024)
+      print('data=%s', (data))
+      if not data:
+        break
+      f.write(data)
+f.close()
 print('Successfully get the file')
 s.close()
 print('connection closed')
 ```
-Server :
+SERVER :
 ```
-import socket
-
-port = 60000
-s = socket.socket()
-host = socket.gethostname()
-s.bind(('localhost', port))
-s.listen(5)
-
+import socket 
+port = 60000 
+s = socket.socket() 
+host = socket.gethostname() 
+s.bind(('localhost', port)) 
+s.listen(5) 
 while True:
-    conn, addr = s.accept()
-    data = conn.recv(1024)
-    print('Server received', repr(data))
-
-    filename = 'myfile.txt'
-    f = open(filename, 'rb')
-    l = f.read(1024)
-    while l:
-        conn.send(l)
-        print('Sent', repr(l))
-        l = f.read(1024)
-    f.close()
-
-    print('Done sending')
-    conn.send('Thank you for connecting'.encode())
-    conn.close()
+  conn, addr = s.accept() 
+  data = conn.recv(1024)
+  print('Server received', repr(data))
+  filename='mytext.txt'
+  f = open(filename,'rb')
+  l = f.read(1024)
+  while (l):
+     conn.send(l)
+  print('Sent ',repr(l))
+  l = f.read(1024)
+  f.close()
+  print('Done sending')
+  conn.send('Thank you for connecting'.encode())
+  conn.close()
 ```
 
 
 
-## OUPUT
+
+
+## OUTPUT :
 
 CLIENT:
 
-![image](https://github.com/Hemanthreddy0321/3c.FILE_TRANSFER_USING_TCP_SOCKETS/assets/150005937/2da0fdf3-4083-4d38-b807-c2434bc64512)
+![image](https://github.com/Hemanthreddy0321/3c.FILE_TRANSFER_USING_TCP_SOCKETS/assets/150005937/a51d18a6-177a-4061-99d1-2200a2acba11)
+
 
 SERVER:
 
-![image](https://github.com/Hemanthreddy0321/3c.FILE_TRANSFER_USING_TCP_SOCKETS/assets/150005937/d2a98565-50b5-4d48-aab6-d37f2bbeba02)
+![image](https://github.com/Hemanthreddy0321/3c.FILE_TRANSFER_USING_TCP_SOCKETS/assets/150005937/1d05f31e-516f-4017-a708-ac2615c20afd)
+
 
 
 
